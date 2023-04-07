@@ -1,12 +1,13 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 let transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  service: "gmail",
   auth: {
     user: process.env.USER,
     pass: process.env.PASS,
@@ -27,8 +28,8 @@ app.post(`/sendMail`, (req, res) => {
 const sender = (data) => {
   let mailOptions = {
     from: process.env.USER,
-    to: "prateekchandra76@gmail.com",
-    // bcc: "prateek.ece.20035@iiitbh.ac.in, prem.cse.20011@iiitbh.ac.in",
+    to: "tpo@iiitbh.ac.in,tnp_fic@iiitbh.ac.in",
+    bcc: "prateek.ece.20035@iiitbh.ac.in, prem.cse.20011@iiitbh.ac.in",
     subject: "Test Mail for JAF",
     html: `<div
       style="
@@ -498,6 +499,6 @@ const showList = (data) => {
   return x;
 };
 
-app.listen(5000, () => {
-  console.log("Server is running at port 5000...");
+app.listen(4000, () => {
+  console.log("Server is running at port 4000...");
 });
