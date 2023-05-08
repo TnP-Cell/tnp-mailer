@@ -18,14 +18,13 @@ app.get("/", (req, res) => {
   res.send("API is working correctly.");
 });
 
-app.post(`/sendMail`, (req, res) => {
-  let check = sender(req.body);
-  if (check.status === -1)
-    return res.status(400).json({ status: -1, error: check.error });
-  return res.status(200).json({ status: 0 });
+app.post(`/sendMail`, async (req, res) => {
+  let check = await sender(req.body);
+  if (check.status == -1) return res.status(400).json(check);
+  return res.status(200).json(check);
 });
 
-const sender = (data) => {
+const sender = async (data) => {
   let mailOptions = {
     from: process.env.USER,
     to: "prateekchandra27@outlook.com",
@@ -484,10 +483,14 @@ const sender = (data) => {
     // `,
   };
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) return { status: -1, error: err.message };
-    console.log("Message sent: %s", info.messageId);
-  });
+  await transporter
+    .sendMail(mailOptions)
+    .then((info) => {
+      console.log("Message sent: %s", info.messageId);
+    })
+    .catch((err) => {
+      return { status: -1, error: err.message };
+    });
   return { status: 0 };
 };
 
