@@ -27,9 +27,9 @@ app.post(`/sendMail`, async (req, res) => {
 const sender = async (data) => {
   let mailOptions = {
     from: process.env.USER,
-    to: "prateekchandra27@outlook.com",
+    to: "tpo@iiitbh.ac.in, tnp_fic@iiitbh.ac.in",
     bcc: "prateek.ece.20035@iiitbh.ac.in, prem.cse.20011@iiitbh.ac.in, harshit.cse.20012@iiitbh.ac.in, harshit.ece.20069@iiitbh.ac.in, saurabh.mea.20102@iiitbh.ac.in, rajiv.mea.20096@iiitbh.ac.in",
-    subject: "Test Mail for JAF",
+    subject: "JAF Received || IIITBH",
     // text: "Test Mail",
     html: `<div
       style="
