@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.send("API is working correctly.");
 });
 
-app.post(`/sendMail`, async (req, res) => {
+app.post(`/sendmail`, async (req, res) => {
   let check = await sender(req.body);
   if (check.status == -1) return res.status(400).json(check);
   return res.status(200).json(check);
