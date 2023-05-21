@@ -584,13 +584,13 @@ const sender = async (data) => {
 
   await transporter
     .sendMail(mailOptions)
-    .then((info) => {
+    .then(async (info) => {
       console.log("Message sent: %s", info.messageId);
+      return { status: 0, id: await info.messageId };
     })
     .catch((err) => {
       return { status: -1, error: err.message };
     });
-  return { status: 0 };
 };
 
 const showList = (data) => {
