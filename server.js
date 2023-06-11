@@ -18,6 +18,24 @@ app.get("/", (req, res) => {
   res.send("API is working correctly.");
 });
 
+app.get("/test", async (req, res) => {
+  let mailOptions = {
+    from: `${process.env.USER}`,
+    to: "prateek.ece.20035@iiitbh.ac.in",
+    subject: "API TEST MAIL",
+    text: "Mail API is Working Fine...",
+  };
+  await transporter
+    .sendMail(mailOptions)
+    .then((info) => {
+      console.log("Message sent: %s", info.messageId);
+      return res.status(200).json({ status: 0 });
+    })
+    .catch((err) => {
+      return res.status(500).json({ status: -1, error: err.message });
+    });
+});
+
 app.post(`/sendmail`, async (req, res) => {
   let check = await sender(req.body);
   if (check.status == -1) return res.status(400).json(check);
